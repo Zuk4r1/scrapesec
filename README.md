@@ -1,22 +1,22 @@
-- ##**Documentación de uso**
+- ## **Documentación de uso**
 
 Este archivo describe cómo utilizar los componentes principales de la herramienta desarrollada por Zuk4r1 : el Scrapper para la recopilación de enlaces y el VulnerabilityScanner para probar vulnerabilidades comunes.
 
-##**¿Quién mantiene y contribuye al proyecto?**
+## **¿Quién mantiene y contribuye al proyecto?**
 
 Scrapper es desarrollado y mantenido por @zuk4r1
 
-- ##**Introducción**
+- ## **Introducción**
 
 Este proyecto permite recopilar enlaces de un sitio web objetivo utilizando Scrappery probar vulnerabilidades comunes de tipo XSS e inyección SQL utilizando VulnerabilityScanner. Los resultados de cada ejecución se muestran en la terminal y se registran en el archivo de registro.
 
-- ##**Requisitos previos**
+- ## **Requisitos previos**
 
 Python 3.7 o superior
 Acceso a Internet para instalar dependencias
 Acceso a la línea de comandos
 
-- ##**Instalación**
+- ## **Instalación**
 
 **Clonar el repositorio:**
 
@@ -26,12 +26,13 @@ cd scrapper.py
 pip install -r requisitos.txt
 
 
-- ##**Ejecución del Scrapper**
+- ## **Ejecución del Scrapper**
 
 --bash
 python scrapper.py
 
-- ##**Opciones de configuración del Scrapper**
+
+- ## **Opciones de configuración del Scrapper**
 
 **user_agent:** User-Agent que se usará en las solicitudes HTTP
 
@@ -39,12 +40,13 @@ python scrapper.py
 
 **max_links:** Número máximo de enlaces a recopilar
 
-- ##**Ejecución del VulnerabilityScanner**
+- ## **Ejecución del VulnerabilityScanner**
 
 --bash
 python scanner.py
 
-- ##**Opciones de configuración del VulnerabilityScanner**
+
+- ## **Opciones de configuración del VulnerabilityScanner**
 
 **xss_payloads:** Lista de cargas útiles para probar vulnerabilidades XSS
 
