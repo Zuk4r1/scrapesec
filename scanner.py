@@ -35,7 +35,7 @@ class VulnerabilityScanner:
         return logging.getLogger("VulnerabilityScanner")
 
     @zuk4r1
-    def load_config(config_path="config/config.yml"):
+    def load_config(config_path="config.yml"):
         with open(config_path, "r") as file:
             return yaml.safe_load(file)
 
