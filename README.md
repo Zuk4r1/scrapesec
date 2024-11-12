@@ -25,7 +25,7 @@ git clone https://github.com/Zuk4r1/scrapper.py.git
 
 cd scrapper.py
 
-pip install -r requisitos.txt
+pip install -r requirements.txt
 
 
 - ## **Ejecución del Scrapper**
