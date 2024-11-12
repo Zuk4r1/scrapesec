@@ -35,11 +35,11 @@ python scrapper.py
 
 - ## **Opciones de configuración del Scrapper**
 
-user_agent: User-Agent que se usará en las solicitudes HTTP
+**user_agent:** User-Agent que se usará en las solicitudes HTTP
 
-timeout: Tiempo máximo de espera para la respuesta de cada solicitud
+**timeout:** Tiempo máximo de espera para la respuesta de cada solicitud
 
-max_links: Número máximo de enlaces a recopilar
+**max_links:** Número máximo de enlaces a recopilar
 
 
 - ## **Ejecución del VulnerabilityScanner**
@@ -49,14 +49,14 @@ python scanner.py
 
 - ## **Opciones de configuración del VulnerabilityScanner**
 
-xss_payloads: Lista de cargas útiles para probar vulnerabilidades XSS
+**xss_payloads:** Lista de cargas útiles para probar vulnerabilidades XSS
 
-sql_injection_payloads: Lista de cargas útiles para probar inyecciones SQL
+**sql_injection_payloads:** Lista de cargas útiles para probar inyecciones SQL
 
-delay_between_requests: Tiempo de espera entre solicitudes para evitar ser bloqueado
+**delay_between_requests:** Tiempo de espera entre solicitudes para evitar ser bloqueado
 
-retry_on_failure: Intentos adicionales en caso de error en la solicitud
+**retry_on_failure:** Intentos adicionales en caso de error en la solicitud
 
-max_retries: Número máximo de reintentos permitidos.
+**max_retries:** Número máximo de reintentos permitidos.
 
-**"El archivo config/config.ymlpermite personalizar los parámetros clave para ambas herramientas."**
+**"El archivo config.yml permite personalizar los parámetros clave para ambas herramientas."**
