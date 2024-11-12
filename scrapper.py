@@ -6,15 +6,15 @@ import logging
 from urllib.parse import urljoin, urlparse
 
 BANNER = """
-Herramienta desarrollada por Zuk4r1
+Herramienta desarrollada por @Zuk4r1
 
 --------------------------------------------------------------------
- ______      _    _      _  __         _         _____       _____  
+ ______      _    _      _  __        _         _____       _____  
 |___  /     | |  | |    | |/ /       / \       |  __ \     |_   _| 
    / /      | |  | |    | ' /       / _ \      | |__) |      | |   
   / /       | |  | |    |  <       / ___ \     |  _  /       | |   
- / /__      | |__| |    | . \     /_/   \_\    | | \ \      _| |_  
-/_____|      \____/     |_|\_\               |_|  \_\    |_____|  
+ / /__      | |__| |    | . \     / /   \ \    | | \ \      _| |_  
+/_____|      \____/     |_|\_\   /_/     \_\   |_|  \_\    |_____|  
 
 --------------------------------------------------------------------
 
@@ -29,12 +29,12 @@ class Scrapper:
         self.max_links = config["scan_parameters"].get("max_links", 50)
         self.logger = self.setup_logger()
 
-    @staticmethod
+    @zuk4r1
     def setup_logger():
         logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
         return logging.getLogger("Scrapper")
 
-    @staticmethod
+    @zuk4r1
     def load_config(config_path="config/config.yml"):
         with open(config_path, "r") as file:
             return yaml.safe_load(file)
