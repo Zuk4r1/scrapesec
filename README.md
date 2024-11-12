@@ -1,10 +1,10 @@
 - ## **Documentación de uso**
 
-Este archivo describe cómo utilizar los componentes principales de la herramienta desarrollada por Zuk4r1 : el Scrapper para la recopilación de enlaces y el VulnerabilityScanner para probar vulnerabilidades comunes.
+Este archivo describe cómo utilizar los componentes principales de la herramienta desarrollada por **@Zuk4r1** : el Scrapper para la recopilación de enlaces y el VulnerabilityScanner para probar vulnerabilidades comunes.
 
 ## **¿Quién mantiene y contribuye al proyecto?**
 
-Scrapper es desarrollado y mantenido por @zuk4r1
+Scrapper es desarrollado y mantenido por **@zuk4r1**
 
 - ## **Introducción**
 
@@ -23,7 +23,11 @@ Acceso a la línea de comandos
 
 git clone https://github.com/Zuk4r1/scrapper.py.git
 
-cd scrapper.py
+cd scrapper
+
+chmod +x scanner.py
+
+chmod +x scrapper.py
 
 pip install -r requirements.txt
 
