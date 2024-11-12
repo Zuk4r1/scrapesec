@@ -29,12 +29,12 @@ class VulnerabilityScanner:
         self.max_retries = config["scan_parameters"].get("max_retries", 3)
         self.logger = self.setup_logger()
 
-    @zuk4r1
-    def setup_logger():
+    
+    def setup_logger(self):
         logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
         return logging.getLogger("VulnerabilityScanner")
 
-    @zuk4r1
+    
     def load_config(config_path="config.yml"):
         with open(config_path, "r") as file:
             return yaml.safe_load(file)
