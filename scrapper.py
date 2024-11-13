@@ -1,9 +1,9 @@
-# scrapper.py
 import requests
 from bs4 import BeautifulSoup
 import yaml
 import logging
 from urllib.parse import urljoin, urlparse
+import tldextract  # Importa la librería para extraer subdominios
 
 BANNER = """
 Herramienta desarrollada por @Zuk4r1
@@ -17,7 +17,6 @@ Herramienta desarrollada por @Zuk4r1
 /_____|      \____/     |_|\_\   /_/     \_\   |_|  \_\    |_____|  
 
 --------------------------------------------------------------------
-
 """
 
 class Scrapper:
@@ -65,10 +64,29 @@ class Scrapper:
         self.logger.info(f"Found {len(links)} unique links.")
         return links
 
+    def extract_subdomains(self, url):
+        """Extrae los subdominios de una URL."""
+        ext = tldextract.extract(url)
+        # Si tiene subdominio, lo devuelve; si no, devuelve una lista vacía
+        subdomains = ext.subdomain.split('.') if ext.subdomain else []
+        return subdomains
+
+    def save_results(self, links, subdomains, filename="resultados.txt"):
+        """Guarda los resultados en un archivo .txt."""
+        with open(filename, "w") as file:
+            file.write(f"URL objetivo: {self.url}\n")
+            file.write("\nEnlaces encontrados:\n")
+            for link in links:
+                file.write(f"{link}\n")
+            file.write("\nSubdominios extraídos:\n")
+            for subdomain in subdomains:
+                file.write(f"{subdomain}\n")
+            self.logger.info(f"Resultados guardados en {filename}")
+
 if __name__ == "__main__":
     print(BANNER)  # Imprimir el banner al iniciar
     config = Scrapper.load_config()  # Cargar configuración desde config.yml
-    url = config.get("scanner", {}).get("url", "http://example.com")
+    url = config.get("scraping", {}).get("url", "http://example.com")
 
     # Crear la instancia de Scrapper con la configuración cargada
     scrapper = Scrapper(url, config)
@@ -76,4 +94,12 @@ if __name__ == "__main__":
     if page_content:
         links = scrapper.parse_links(page_content)
         print("Enlaces encontrados:", links)
+
+        # Extraer subdominios de la URL principal
+        subdomains = scrapper.extract_subdomains(url)
+        print("Subdominios extraídos:", subdomains)
+
+        # Guardar resultados en un archivo .txt
+        scrapper.save_results(links, subdomains)
+
 
