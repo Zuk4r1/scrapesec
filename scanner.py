@@ -1,8 +1,8 @@
-# scanner.py
 import requests
 import yaml
 import time
 import logging
+import os
 
 BANNER = """
 Herramienta desarrollada por @Zuk4r1
@@ -17,10 +17,8 @@ Herramienta desarrollada por @Zuk4r1
 --------------------------------------------------------------------
 """
 
-
 class VulnerabilityScanner:
-    def __init__(self, url, config):
-        self.url = url
+    def __init__(self, config):
         self.config = config
         self.payloads = config["scanner"]
         self.detection = config["scanner"]["detection"]
@@ -29,13 +27,12 @@ class VulnerabilityScanner:
         self.max_retries = config["scan_parameters"].get("max_retries", 3)
         self.logger = self.setup_logger()
 
-    
     def setup_logger(self):
         logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
         return logging.getLogger("VulnerabilityScanner")
 
-    
-    def load_config(config_path="config.yml"):
+    def load_config(self, config_path="config.yml"):
+        """Cargar configuración desde el archivo config.yml."""
         with open(config_path, "r") as file:
             return yaml.safe_load(file)
 
@@ -74,12 +71,46 @@ class VulnerabilityScanner:
                 print(f"[!] Posible inyección SQL encontrada en: {test_url} con payload '{payload}'")
                 self.logger.info(f"Posible inyección SQL en: {test_url} con payload '{payload}'")
 
+    def scan_urls(self, urls):
+        """Escanea las URLs proporcionadas (de subdominios o enlaces encontrados)."""
+        for url in urls:
+            print(f"Escaneando URL: {url}")
+            self.url = url  # Actualiza la URL de la instancia
+            self.test_xss()
+            self.test_sql_injection()
+
+    def save_results(self, results, file_path="resultados.txt"):
+        """Guarda los resultados en un archivo de texto."""
+        with open(file_path, "a") as file:
+            for result in results:
+                file.write(result + "\n")
+
 if __name__ == "__main__":
     print(BANNER)  # Imprimir el banner al iniciar
-    config = VulnerabilityScanner.load_config()
-    url = config.get("scanner", {}).get("url", "http://example.com")
 
-    # Ejecutar el escáner de vulnerabilidades
-    scanner = VulnerabilityScanner(url, config)
-    scanner.test_xss()
-    scanner.test_sql_injection()
+    # Cargar configuración desde el archivo config.yml
+    config = VulnerabilityScanner.load_config(None)  # Cargar la configuración antes de crear la instancia
+    scanner = VulnerabilityScanner(config=config)  # Instanciar el escáner con la configuración cargada
+
+    # Cargar las URLs desde el archivo 'resultados.txt' generado por scrapper.py
+    resultados_file = "resultados.txt"
+    
+    if not os.path.exists(resultados_file):
+        print(f"El archivo {resultados_file} no existe. Asegúrate de ejecutar el scrapper primero.")
+        exit(1)
+
+    with open(resultados_file, "r") as file:
+        lines = file.readlines()
+        urls = [line.strip() for line in lines if "http" in line]
+
+    # Ejecutar el escáner de vulnerabilidades con las URLs extraídas del archivo de resultados
+    results = []
+    for url in urls:
+        print(f"Escaneando {url}...")
+        scanner.url = url
+        scanner.test_xss()
+        scanner.test_sql_injection()
+
+    # Guardar los resultados de las vulnerabilidades encontradas en un archivo
+    scanner.save_results(results)
+
