@@ -1,8 +1,7 @@
-# Archivo de configuración para la herramienta Scrapper
-
 scraping:
   user_agent: "ScrapperBot/1.0"     # User-Agent personalizado para solicitudes HTTP
   timeout: 5                        # Tiempo de espera en segundos para las solicitudes
+  max_links: 30                     # Número máximo de enlaces a seguir en el scraping
 
 scanner:
   xss_payloads:
@@ -23,9 +22,13 @@ scanner:
     - "admin' --"
     - "admin' #"
     - "admin'/*"
+  
+  # Nuevas vulnerabilidades y configuraciones adicionales
+  csp_vulnerability: true           # Verifica la cabecera Content Security Policy
+  anti_csrf_token: true             # Verifica la presencia de tokens Anti-CSRF
+  anti_clickjacking: true           # Verifica la cabecera Anti-Clickjacking
 
   # Configuración para la detección de respuestas vulnerables
-  # Las siguientes palabras clave se utilizan para identificar posibles vulnerabilidades
   detection:
     xss_indicators:
       - "<script>alert(1)</script>"
@@ -40,6 +43,12 @@ scanner:
       - "Warning: mysql"
       - "Unclosed quotation mark after the character string"
       - "syntax error"
+    csp_indicators:
+      - "Content-Security-Policy"
+    anti_csrf_indicators:
+      - "csrf"
+    clickjacking_indicators:
+      - "X-Frame-Options"
 
 # Parámetros adicionales de escaneo
 scan_parameters:
@@ -47,3 +56,6 @@ scan_parameters:
   retry_on_failure: true            # Volver a intentar en caso de fallo de conexión
   max_retries: 3                    # Número máximo de reintentos por solicitud fallida
   delay_between_requests: 2         # Retraso en segundos entre cada solicitud
+
+
+
