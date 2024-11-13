@@ -1,57 +1,54 @@
-- ## **Documentación de uso**
+- ## **Documentación de uso** ##
 
-Este archivo describe cómo utilizar los componentes principales de la herramienta desarrollada por **@Zuk4r1** : el Scrapper para la recopilación de enlaces y el VulnerabilityScanner para probar vulnerabilidades comunes.
+Este archivo describe cómo utilizar los componentes principales de la herramienta desarrollada por **@Zuk4r1** el proyecto **ScrapeSec** para la recopilación de enlaces con scrapper.py y el scanner.py para probar vulnerabilidades comunes, como XSS e inyección SQL.
 
-## **¿Quién mantiene y contribuye al proyecto?**
+## **¿Quién mantiene y contribuye al proyecto?** ##
 
-Scrapper es desarrollado y mantenido por **@zuk4r1**
+**ScrapeSec** es desarrollado y mantenido por **@zuk4r1**
 
-- ## **Introducción**
+- ## **Introducción** ##
 
-Este proyecto permite recopilar enlaces de un sitio web objetivo utilizando Scrappery probar vulnerabilidades comunes de tipo XSS e inyección SQL utilizando VulnerabilityScanner. Los resultados de cada ejecución se muestran en la terminal y se registran en el archivo de registro.
+Este proyecto permite recopilar enlaces de un sitio web objetivo utilizando **scrapper.py** y probar vulnerabilidades comunes de tipo XSS e inyección SQL utilizando **scanner.py** . Los resultados de cada ejecución se muestran en la terminal y se registran en el archivo de resultados ( resultados.txt).
 
-- ## **Requisitos previos**
+- ## **Requisitos previos** ##
 
 Python 3.7 o superior
+
 Acceso a Internet para instalar dependencias
+
 Acceso a la línea de comandos
 
-- ## **Instalación**
+- ## **Instalación** ##
 
-**Clonar el repositorio:**
-
+**1. Clonar el repositorio:**
 
 git clone https://github.com/Zuk4r1/scrapper.py.git
 
-cd scrapper
+**2. Cambia al directorio del proyecto:**
+
+cd ScrapeSec
+
+**3. Da permisos de ejecución a los scripts:**
 
 chmod +x scanner.py
 
 chmod +x scrapper.py
 
+**4. Instale las dependencias necesarias:**
+
 pip install -r requirements.txt
 
 
-- ## **Ejecución del Scrapper**
+- ## **Ejecución del ScrapeSec simplemente corre el siguiente comando:** ##
 
-python scrapper.py
+python scrapper.py https://ejemplo.com/
 
-
-- ## **Opciones de configuración del Scrapper**
-
-**user_agent:** User-Agent que se usará en las solicitudes HTTP
-
-**timeout:** Tiempo máximo de espera para la respuesta de cada solicitud
-
-**max_links:** Número máximo de enlaces a recopilar
-
-
-- ## **Ejecución del VulnerabilityScanner**
+- ## **Ejecución del scanner.py:** ##
 
 python scanner.py
 
 
-- ## **Opciones de configuración del VulnerabilityScanner**
+- ## **Opciones de configuración del scanner.py** ##
 
 **xss_payloads:** Lista de cargas útiles para probar vulnerabilidades XSS
 
@@ -63,4 +60,18 @@ python scanner.py
 
 **max_retries:** Número máximo de reintentos permitidos.
 
-**"El archivo config.yml permite personalizar los parámetros clave para ambas herramientas."**
+- ## **Archivo de configuración config.yml** ##
+El archivo config.ymlpermite personalizar los parámetros clave para ambas herramientas. Aquí se pueden definir los parámetros de escaneo, como las cargas útiles de inyección y XSS, así como los ajustes de red y retrasos entre solicitudes.
+
+- ## **Funcionamiento** ##
+1. **Scrapper.py** recorre el sitio web objetivo, recopilando enlaces y guardándolos en el archivo resultados.txt.
+
+2. **scanner.py** utiliza esos enlaces, escaneando cada uno de ellos en busca de vulnerabilidades comunes, como XSS e inyecciones SQL.
+
+3. Los resultados del escaneo se guardan en el mismo archivo resultados.txto en un archivo de registro según se configure.
+
+- ## **Notas importantes** ##
+  
+Asegúrese de haber ejecutado **scrapper.py** antes de ejecutar **scanner,py** ya que este último depende de los enlaces recopilados en el archivo **resultados.txt**.
+
+La herramienta no está pensada para ser utilizada en sitios web sin permiso explícito del propietario. Asegúrese de contar con autorización para escanear el sitio objetivo.
