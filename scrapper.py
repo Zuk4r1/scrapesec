@@ -29,13 +29,12 @@ class Scrapper:
         self.max_links = config["scan_parameters"].get("max_links", 50)
         self.logger = self.setup_logger()
 
-    @zuk4r1
-    def setup_logger():
+    def setup_logger(self):
         logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
         return logging.getLogger("Scrapper")
 
-    @zuk4r1
-    def load_config(config_path="config/config.yml"):
+    @staticmethod
+    def load_config(config_path="config.yml"):  # Cambiado a "config.yml"
         with open(config_path, "r") as file:
             return yaml.safe_load(file)
 
@@ -68,12 +67,13 @@ class Scrapper:
 
 if __name__ == "__main__":
     print(BANNER)  # Imprimir el banner al iniciar
-    config = Scrapper.load_config()
+    config = Scrapper.load_config()  # Cargar configuración desde config.yml
     url = config.get("scanner", {}).get("url", "http://example.com")
 
-    # Ejecutar el scrapper
+    # Crear la instancia de Scrapper con la configuración cargada
     scrapper = Scrapper(url, config)
     page_content = scrapper.fetch_page()
     if page_content:
         links = scrapper.parse_links(page_content)
         print("Enlaces encontrados:", links)
+
