@@ -1,6 +1,6 @@
 - ## **Documentación de uso** ##
 
-Este archivo describe cómo utilizar los componentes principales de la herramienta desarrollada por **@Zuk4r1** el proyecto **ScrapeSec** para la recopilación de enlaces con scrapper.py y el scanner.py para probar vulnerabilidades comunes, como XSS e inyección SQL.
+Este archivo describe cómo utilizar los componentes principales de la herramienta desarrollada por **@Zuk4r1** el proyecto **ScrapeSec** para la recopilación de enlaces con **scrapper.py** y el **scanner.py** para probar vulnerabilidades comunes,avanzadas y bypass del firewall.
 
 ## **¿Quién mantiene y contribuye al proyecto?** ##
 
@@ -22,7 +22,7 @@ Acceso a la línea de comandos
 
 **1. Clonar el repositorio:**
 
-git clone https://github.com/Zuk4r1/scrapper.py.git
+ git clone https://github.com/Zuk4r1/scrapper.py.git
 
 **2. Cambia al directorio del proyecto:**
 
