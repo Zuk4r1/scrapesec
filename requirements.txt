@@ -1,4 +1,4 @@
+tldextract 
 requests
-beautifulsoup4
-lxml
-PyYAML
+dnspython
+pyyaml
