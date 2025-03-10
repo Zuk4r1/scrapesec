@@ -21,32 +21,36 @@ Acceso a la línea de comandos
 - ## **Instalación** ##
 
 **1. Clonar el repositorio:**
-
- git clone https://github.com/Zuk4r1/scrapper.py.git
+```
+git clone https://github.com/Zuk4r1/scrapper.py.git
+```
 
 **2. Cambia al directorio del proyecto:**
-
+```
 cd ScrapeSec
+```
 
 **3. Da permisos de ejecución a los scripts:**
-
+```
 chmod +x scanner.py
-
 chmod +x scrapper.py
+```
+
 
 **4. Instale las dependencias necesarias:**
-
+```
 pip install -r requirements.txt
-
+```
 
 - ## **Ejecución del ScrapeSec simplemente corre el siguiente comando:** ##
-
+```
 python scrapper.py https://ejemplo.com/
+```
 
 - ## **Ejecución del scanner.py:** ##
-
+```
 python scanner.py
-
+```
 
 - ## **Opciones de configuración del scanner.py** ##
 
