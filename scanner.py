@@ -1,4 +1,3 @@
-  GNU nano 8.2                                                                                                                                                                                                                                                                                                          scanner.py                                                                                                                                                                                                                                                                                                                    
 import requests
 import yaml
 import time
