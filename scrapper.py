@@ -1,4 +1,3 @@
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                       scripper.py *                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
 import sys
 import requests
 import logging
@@ -98,5 +97,3 @@ if __name__ == "__main__":
         scrapper.save_results(subdomains)
     else:
         print("La URL proporcionada no es válida.")
-
-
