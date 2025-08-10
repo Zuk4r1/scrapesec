@@ -18,7 +18,7 @@ except ImportError:
     Fore = Style = DummyColor()
 
 BANNER = f"""{Fore.CYAN}
-Herramienta desarrollada por @Zuk4r1
+Herramienta desarrollada por 🐉 @Zuk4r1
 
 --------------------------------------------------------------
   ______   _    _    _  __   _  _     _____    __   _______
@@ -189,3 +189,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
